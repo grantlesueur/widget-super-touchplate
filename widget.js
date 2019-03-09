@@ -16,7 +16,7 @@ cprequire_test(["inline:com-chilipeppr-widget-super-touchplate"], function(touch
 
       function () {
           cprequire(
-          ["inline:com-chilipeppr-widget-serialport"],
+          ["inline:com-chilipeppr-widget-serialport-instance"],
 
           function (sp) {
               sp.setSingleSelectMode();
@@ -83,7 +83,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
     githuburl: "(auto fill by runme.js)", // The backing github repo
     testurl: "(auto fill by runme.js)", // The standalone working widget so can view it working by itself
     name: "Widget / Super Touch Plate",
-    desc: "This widget helps you use a touch plate to find the origin on your workpiece.",
+    desc: "This widget helps you use a touch plate to find and define the origin on your workpiece.",
     subscribe: {},
     foreignPublish: {},
     foreignSubscribe: {},
@@ -283,14 +283,14 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
       var id = "tp" + this.gcodeCtr++;
       if(this.coordOffsetNo == 0)  {
        gcode = "G28.3 Z0"; 
-       chilipeppr.publish("/com-chilipeppr-widget-serialport/jsonSend", {
+       chilipeppr.publish("/com-chilipeppr-widget-serialport-instance/jsonSend", {
          Id: id,
          D: gcode
        });
       }
       else {
         gcode = "G10 L2 P" + this.coordOffsetNo + " Z0"
-        chilipeppr.publish("/com-chilipeppr-widget-serialport/jsonSend", {
+        chilipeppr.publish("/com-chilipeppr-widget-serialport-instance/jsonSend", {
          Id: id,
          D: gcode
         });
@@ -298,7 +298,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
       //Start searching!
       var id = "tp" + this.gcodeCtr++;
       gcode = "G38.2 Z-20 F" + fr + "\n";
-      chilipeppr.publish("/com-chilipeppr-widget-serialport/jsonSend", {
+      chilipeppr.publish("/com-chilipeppr-widget-serialport-instance/jsonSend", {
         Id: id,
         D: gcode
       });
@@ -318,14 +318,14 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
       var id = "tp" + this.gcodeCtr++;
       if(this.coordOffsetNo == 0)  {
        gcode = "G28.3 X0"; 
-       chilipeppr.publish("/com-chilipeppr-widget-serialport/jsonSend", {
+       chilipeppr.publish("/com-chilipeppr-widget-serialport-instance/jsonSend", {
          Id: id,
          D: gcode
        });
       }
       else {
         gcode = "G10 L2 P" + this.coordOffsetNo + " X0"
-        chilipeppr.publish("/com-chilipeppr-widget-serialport/jsonSend", {
+        chilipeppr.publish("/com-chilipeppr-widget-serialport-instance/jsonSend", {
          Id: id,
          D: gcode
         });
@@ -333,7 +333,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
       //Start searching! Positive value makes toolhead search in opposite direction from g53 origin, towards touchplate.
       var id = "tp" + this.gcodeCtr++;
       gcode = "G38.2 X20 F" + fr + "\n";
-      chilipeppr.publish("/com-chilipeppr-widget-serialport/jsonSend", {
+      chilipeppr.publish("/com-chilipeppr-widget-serialport-instance/jsonSend", {
         Id: id,
         D: gcode
       });
@@ -352,14 +352,14 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
       var id = "tp" + this.gcodeCtr++;
       if(this.coordOffsetNo == 0)  {
        gcode = "G28.3 Y0"; 
-       chilipeppr.publish("/com-chilipeppr-widget-serialport/jsonSend", {
+       chilipeppr.publish("/com-chilipeppr-widget-serialport-instance/jsonSend", {
          Id: id,
          D: gcode
        });
       }
       else {
         gcode = "G10 L2 P" + this.coordOffsetNo + " Y0"
-        chilipeppr.publish("/com-chilipeppr-widget-serialport/jsonSend", {
+        chilipeppr.publish("/com-chilipeppr-widget-serialport-instance/jsonSend", {
          Id: id,
          D: gcode
         });
@@ -367,7 +367,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
       //Start searching! Positive value makes toolhead search in opposite direction from g53 origin, towards touchplate.
       var id = "tp" + this.gcodeCtr++;
       gcode = "G38.2 Y20 F" + fr + "\n";
-      chilipeppr.publish("/com-chilipeppr-widget-serialport/jsonSend", {
+      chilipeppr.publish("/com-chilipeppr-widget-serialport-instance/jsonSend", {
         Id: id,
         D: gcode
       });
@@ -381,7 +381,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
         // fire off cancel to cnc
         var id = "tp" + this.gcodeCtr++;
         var gcode = "!\n";
-        chilipeppr.publish("/com-chilipeppr-widget-serialport/jsonSend", {
+        chilipeppr.publish("/com-chilipeppr-widget-serialport-instance/jsonSend", {
           Id: id,
           D: gcode
         });
@@ -408,7 +408,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
         // send the probe command to start the movement
         var id = "tp" + this.gcodeCtr++;
         var gcode = unitSystem + " G91 (Use " + unitSystemName + " and rel coords)\n";
-        chilipeppr.publish("/com-chilipeppr-widget-serialport/jsonSend", {
+        chilipeppr.publish("/com-chilipeppr-widget-serialport-instance/jsonSend", {
           Id: id,
           D: gcode
         });
@@ -458,7 +458,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
         //that.watchForProbeStart(); //This is broken, inlining.
         console.log(axis);
         this.watchForProbeStart();
-        //chilipeppr.subscribe("/com-chilipeppr-widget-serialport/recvline", this, this.onRecvLineForProbe);
+        //chilipeppr.subscribe("/com-chilipeppr-widget-serialport-instance/recvline", this, this.onRecvLineForProbe);
         if (axis == "z") this.runZAxis();
         if (axis == "x") this.runXAxis();
         if (axis == "y") this.runYAxis();
@@ -467,11 +467,11 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
     },
     watchForProbeStart: function() {
       // We need to subscribe to the /recvline cuz we need to analyze everything coming back
-      chilipeppr.subscribe("/com-chilipeppr-widget-serialport/recvline", this, this.onRecvLineForProbe);
+      chilipeppr.subscribe("/com-chilipeppr-widget-serialport-instance/recvline", this, this.onRecvLineForProbe);
 
     },
     watchForProbeEnd: function() {
-      chilipeppr.unsubscribe("/com-chilipeppr-widget-serialport/recvline", this, this.onRecvLineForProbe);
+      chilipeppr.unsubscribe("/com-chilipeppr-widget-serialport-instance/recvline", this, this.onRecvLineForProbe);
     },
     onRecvLineForProbe: function(data) {
       console.log("onRecvLineForProbe. data:", data);
@@ -556,7 +556,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
           var gcode = "G10 L2 P" + this.coordOffsetNo + " Z" + plateHeight + "\n";
         }
         var id = "tp" + this.gcodeCtr++;
-        chilipeppr.publish("/com-chilipeppr-widget-serialport/jsonSend", {
+        chilipeppr.publish("/com-chilipeppr-widget-serialport-instance/jsonSend", {
           Id: id,
           D: gcode
         });
@@ -564,7 +564,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
         // now back off a bit
         var gcode = "G91 G0 Z2\n";
         var id = "tp" + this.gcodeCtr++;
-        chilipeppr.publish("/com-chilipeppr-widget-serialport/jsonSend", {
+        chilipeppr.publish("/com-chilipeppr-widget-serialport-instance/jsonSend", {
           Id: id,
           D: gcode
         });
@@ -590,7 +590,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
           var gcode = "G10 L20 P" + this.coordOffsetNo + " X" + xoffset + "\n";
         }
         var id = "tp" + this.gcodeCtr++;
-        chilipeppr.publish("/com-chilipeppr-widget-serialport/jsonSend", {
+        chilipeppr.publish("/com-chilipeppr-widget-serialport-instance/jsonSend", {
           Id: id,
           D: gcode
         });
@@ -598,7 +598,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
         // now back off a bit
         var gcode = "G91 G0 X-2\n";
         var id = "tp" + this.gcodeCtr++;
-        chilipeppr.publish("/com-chilipeppr-widget-serialport/jsonSend", {
+        chilipeppr.publish("/com-chilipeppr-widget-serialport-instance/jsonSend", {
           Id: id,
           D: gcode
         });
@@ -624,7 +624,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
           var gcode = "G10 L20 P" + this.coordOffsetNo + " Y" + yoffset + "\n";
         }
         var id = "tp" + this.gcodeCtr++;
-        chilipeppr.publish("/com-chilipeppr-widget-serialport/jsonSend", {
+        chilipeppr.publish("/com-chilipeppr-widget-serialport-instance/jsonSend", {
           Id: id,
           D: gcode
         });
@@ -632,7 +632,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
         // now back off a bit
         var gcode = "G91 G0 Y-2\n";
         var id = "tp" + this.gcodeCtr++;
-        chilipeppr.publish("/com-chilipeppr-widget-serialport/jsonSend", {
+        chilipeppr.publish("/com-chilipeppr-widget-serialport-instance/jsonSend", {
           Id: id,
           D: gcode
         });
@@ -641,7 +641,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
       // back to absolute mode
       var gcode = "G90\n";
       var id = "tp" + this.gcodeCtr++;
-      chilipeppr.publish("/com-chilipeppr-widget-serialport/jsonSend", {
+      chilipeppr.publish("/com-chilipeppr-widget-serialport-instance/jsonSend", {
         Id: id,
         D: gcode
       });
@@ -861,7 +861,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
         // unsubscribe from everything
         console.log("unactivateWidget. unsubscribing.");
         //chilipeppr.unsubscribe("/com-chilipeppr-interface-cnccontroller/axes", this, this.onAxes);
-        //chilipeppr.unsubscribe("/com-chilipeppr-widget-serialport/ws/recv", this, this.onWsRecvLaser);
+        //chilipeppr.unsubscribe("/com-chilipeppr-widget-serialport-instance/ws/recv", this, this.onWsRecvLaser);
         this.isHidden = true;
 
       }
@@ -876,7 +876,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
         // resubscribe
         console.log("activateWidget. resubscribing.");
         //chilipeppr.subscribe("/com-chilipeppr-interface-cnccontroller/axes", this, this.onAxes);
-        //chilipeppr.subscribe("/com-chilipeppr-widget-serialport/ws/recv", this, this.onWsRecvLaser);
+        //chilipeppr.subscribe("/com-chilipeppr-widget-serialport-instance/ws/recv", this, this.onWsRecvLaser);
         this.isHidden = false;
         this.introAnim();
       }
