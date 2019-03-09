@@ -126,9 +126,12 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
     light: null, // threejs light
     initUI: function()  {
       // setup run buttons
-      $('#com-chilipeppr-widget-super-touchplate .btn-Zplaterun').click(this.onRun.bind(this, "z"));
-      $('#com-chilipeppr-widget-super-touchplate .btn-Xplaterun').click(this.onRun.bind(this, "x"));
-      $('#com-chilipeppr-widget-super-touchplate .btn-Yplaterun').click(this.onRun.bind(this, "y"));
+      $('#com-chilipeppr-widget-super-touchplate .btn-Zplaterun').click(this.onRun.bind(this, "+z"));
+      $('#com-chilipeppr-widget-super-touchplate .btn-Xplaterun').click(this.onRun.bind(this, "+x"));
+      $('#com-chilipeppr-widget-super-touchplate .btn-Yplaterun').click(this.onRun.bind(this, "+y"));
+      $('#com-chilipeppr-widget-super-touchplate .btn-Z-platerun').click(this.onRun.bind(this, "-z"));
+      $('#com-chilipeppr-widget-super-touchplate .btn-X-platerun').click(this.onRun.bind(this, "-x"));
+      $('#com-chilipeppr-widget-super-touchplate .btn-Y-platerun').click(this.onRun.bind(this, "-y"));
       //Tabs
       $('li a').click(function (e) {
         e.preventDefault()
