@@ -328,6 +328,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
          D: gcode
         });
       }
+//GLS Look at this next. this is not running conditionally.
       //Start searching!
       var id = "tp" + this.gcodeCtr++;
       gcode = "G38.2 Z20 F" + fr + "\n";
@@ -594,7 +595,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
           Id: id,
           D: gcode
         });
-
+//GLS Look at this next
         // now back off a bit
         var gcode = "G91 G0 Z2\n";
         var id = "tp" + this.gcodeCtr++;
