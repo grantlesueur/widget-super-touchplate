@@ -133,8 +133,8 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
       $('#com-chilipeppr-widget-super-touchplate .btn-Yplaterun').click(this.onRun.bind(this, "y"));
       //GLS added 3 more buttons
       $('#com-chilipeppr-widget-super-touchplate .btn-Z-platerun').click(this.onRun.bind(this, "z"));
-      $('#com-chilipeppr-widget-super-touchplate .btn-X-platerun').click(this.onRun.bind(this, "-x"));
-      $('#com-chilipeppr-widget-super-touchplate .btn-Y-platerun').click(this.onRun.bind(this, "-y"));
+      $('#com-chilipeppr-widget-super-touchplate .btn-X-platerun').click(this.onRun.bind(this, "x"));
+      $('#com-chilipeppr-widget-super-touchplate .btn-Y-platerun').click(this.onRun.bind(this, "y"));
       //Tabs
       $('li a').click(function (e) {
         e.preventDefault()
@@ -276,6 +276,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
       console.log("Starting Z-probing operation");
       //swap button to stop
       $('#com-chilipeppr-widget-super-touchplate .btn-Zplaterun').addClass("btn-danger").text("Stop");
+      $('#com-chilipeppr-widget-super-touchplate .btn-Z-platerun').addClass("btn-danger").text("Stop");
       //get feedrate
       var fr = $('#com-chilipeppr-widget-super-touchplate .frprobe').val();
       
@@ -389,6 +390,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
         this.watchForProbeEnd();
         // swap button for desired axis to stop
         if (axis == "z") $('#com-chilipeppr-widget-super-touchplate .btn-Zplaterun').removeClass("btn-danger").text("Run Z");
+        if (axis == "z") $('#com-chilipeppr-widget-super-touchplate .btn-Z-platerun').removeClass("btn-danger").text("Run Z");
         if (axis == "x") $('#com-chilipeppr-widget-super-touchplate .btn-Xplaterun').removeClass("btn-danger").text("Run X");
         if (axis == "y") $('#com-chilipeppr-widget-super-touchplate .btn-Yplaterun').removeClass("btn-danger").text("Run Y");
         this.animInfiniteEnd();
