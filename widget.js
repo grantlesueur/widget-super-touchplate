@@ -275,8 +275,8 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
       this.isRunning = true;
       console.log("Starting Z-probing operation");
       //swap button to stop
+      //GLS Zprobe Down
       $('#com-chilipeppr-widget-super-touchplate .btn-Zplaterun').addClass("btn-danger").text("Stop");
-      $('#com-chilipeppr-widget-super-touchplate .btn-Z-platerun').addClass("btn-danger").text("Stop");
       //get feedrate
       var fr = $('#com-chilipeppr-widget-super-touchplate .frprobe').val();
       
@@ -299,6 +299,38 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
       //Start searching!
       var id = "tp" + this.gcodeCtr++;
       gcode = "G38.2 Z-20 F" + fr + "\n";
+      chilipeppr.publish("/com-chilipeppr-widget-serialport/jsonSend", {
+        Id: id,
+        D: gcode
+      });
+      this.runningAxis = "z";
+      this.animInfiniteStart();
+      console.log(this.animAxis);
+      
+      //GLS Zprobe Up
+      $('#com-chilipeppr-widget-super-touchplate .btn-Z-platerun').addClass("btn-danger").text("Stop");
+      //get feedrate
+      var fr = $('#com-chilipeppr-widget-super-touchplate .frprobe').val();
+      
+      //Set this axis to zero so that we search in the correct direction no matter what the absolute coords are.
+      var id = "tp" + this.gcodeCtr++;
+      if(this.coordOffsetNo == 0)  {
+       gcode = "G28.3 Z0"; 
+       chilipeppr.publish("/com-chilipeppr-widget-serialport/jsonSend", {
+         Id: id,
+         D: gcode
+       });
+      }
+      else {
+        gcode = "G10 L2 P" + this.coordOffsetNo + " Z0"
+        chilipeppr.publish("/com-chilipeppr-widget-serialport/jsonSend", {
+         Id: id,
+         D: gcode
+        });
+      }
+      //Start searching!
+      var id = "tp" + this.gcodeCtr++;
+      gcode = "G38.2 Z20 F" + fr + "\n";
       chilipeppr.publish("/com-chilipeppr-widget-serialport/jsonSend", {
         Id: id,
         D: gcode
