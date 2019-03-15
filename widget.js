@@ -580,7 +580,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
       if ('prb' in json && 'e' in json.prb && this.runningAxis == "-x") {
         //this.xOffset = json.prb.x;
         console.log("X Offset from JSON: " + this.xOffset);
-        $('#com-chilipeppr-widget-super-touchplate .btn-X-platerun').removeClass("btn-danger").text("Run X");
+        $('#com-chilipeppr-widget-super-touchplate .btn-X-platerun').removeClass("btn-danger").text("Run -X");
         this.animInfiniteEnd();
         this.onAfterProbeDone(json.prb);
         this.isRunning = false;  
@@ -597,7 +597,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
       if ('prb' in json && 'e' in json.prb && this.runningAxis == "-y") {
         //this.yOffset = json.prb.y;
         console.log("Y Offset from JSON: " + this.yOffset);
-        $('#com-chilipeppr-widget-super-touchplate .btn-Y-platerun').removeClass("btn-danger").text("Run Y");
+        $('#com-chilipeppr-widget-super-touchplate .btn-Y-platerun').removeClass("btn-danger").text("Run -Y");
         this.animInfiniteEnd();
         this.onAfterProbeDone(json.prb);
         this.isRunning = false;
