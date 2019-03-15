@@ -132,9 +132,9 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
       $('#com-chilipeppr-widget-super-touchplate .btn-Xplaterun').click(this.onRun.bind(this, "x"));
       $('#com-chilipeppr-widget-super-touchplate .btn-Yplaterun').click(this.onRun.bind(this, "y"));
       //GLS added 3 more buttons
-      $('#com-chilipeppr-widget-super-touchplate .btn-Z-platerun').click(this.onRun.bind(this, "z"));
-      $('#com-chilipeppr-widget-super-touchplate .btn-X-platerun').click(this.onRun.bind(this, "x"));
-      $('#com-chilipeppr-widget-super-touchplate .btn-Y-platerun').click(this.onRun.bind(this, "y"));
+      //$('#com-chilipeppr-widget-super-touchplate .btn-Z-platerun').click(this.onRun.bind(this, "z"));
+      $('#com-chilipeppr-widget-super-touchplate .btn-X-platerun').click(this.onRun.bind(this, "-x"));
+      $('#com-chilipeppr-widget-super-touchplate .btn-Y-platerun').click(this.onRun.bind(this, "-y"));
       //Tabs
       $('li a').click(function (e) {
         e.preventDefault()
@@ -307,7 +307,6 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
       this.animInfiniteStart();
       console.log(this.animAxis);
       
-      //GLS Zprobe Up
       $('#com-chilipeppr-widget-super-touchplate .btn-Z-platerun').addClass("btn-danger").text("Stop");
       //get feedrate
       var fr = $('#com-chilipeppr-widget-super-touchplate .frprobe').val();
@@ -328,23 +327,17 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
          D: gcode
         });
       }
-//GLS Look at this next. this is not running conditionally.
-      //Start searching!
-      var id = "tp" + this.gcodeCtr++;
-      gcode = "G38.2 Z20 F" + fr + "\n";
-      chilipeppr.publish("/com-chilipeppr-widget-serialport/jsonSend", {
-        Id: id,
-        D: gcode
-      });
       this.runningAxis = "z";
       this.animInfiniteStart();
       console.log(this.animAxis);
     },
-    runXAxis: function() {
+    
+    //GLS New
+    run_XAxis: function() {
       this.isRunning = true;
-      console.log("Starting X-probing operation");
+      console.log("Starting -X-probing operation");
       //swap button to stop
-      $('#com-chilipeppr-widget-super-touchplate .btn-Xplaterun').addClass("btn-danger").text("Stop");
+      $('#com-chilipeppr-widget-super-touchplate .btn-X-platerun').addClass("btn-danger").text("Stop");
       //get feedrate
       var fr = $('#com-chilipeppr-widget-super-touchplate .frprobe').val();
       
@@ -366,12 +359,12 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
       }  
       //Start searching! Positive value makes toolhead search in opposite direction from g53 origin, towards touchplate.
       var id = "tp" + this.gcodeCtr++;
-      gcode = "G38.2 X20 F" + fr + "\n";
+      gcode = "G38.2 X-20 F" + fr + "\n";
       chilipeppr.publish("/com-chilipeppr-widget-serialport/jsonSend", {
         Id: id,
         D: gcode
       });
-      this.runningAxis = "x";
+      this.runningAxis = "-x";
       this.animInfiniteStart();
     },
     runYAxis: function() {
@@ -408,6 +401,41 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
       this.runningAxis = "y";
       this.animInfiniteStart();
     },
+    //GLS New
+    run_YAxis: function() {
+      this.isRunning = true;
+      console.log("Starting Y-probing operation");
+      //swap button to stop
+      $('#com-chilipeppr-widget-super-touchplate .btn-Y-platerun').addClass("btn-danger").text("Stop");
+      //get feedrate
+      var fr = $('#com-chilipeppr-widget-super-touchplate .frprobe').val();
+      
+      //Set this axis to zero so that we search in the correct direction no matter what the absolute coords are.
+      var id = "tp" + this.gcodeCtr++;
+      if(this.coordOffsetNo == 0)  {
+       gcode = "G28.3 Y0"; 
+       chilipeppr.publish("/com-chilipeppr-widget-serialport/jsonSend", {
+         Id: id,
+         D: gcode
+       });
+      }
+      else {
+        gcode = "G10 L2 P" + this.coordOffsetNo + " Y0"
+        chilipeppr.publish("/com-chilipeppr-widget-serialport/jsonSend", {
+         Id: id,
+         D: gcode
+        });
+      }
+      //Start searching! Positive value makes toolhead search in opposite direction from g53 origin, towards touchplate.
+      var id = "tp" + this.gcodeCtr++;
+      gcode = "G38.2 Y-20 F" + fr + "\n";
+      chilipeppr.publish("/com-chilipeppr-widget-serialport/jsonSend", {
+        Id: id,
+        D: gcode
+      });
+      this.runningAxis = "y";
+      this.animInfiniteStart();
+    },
     onRun: function(axis) {
       if (this.isRunning) {
         // we need to stop
@@ -423,9 +451,11 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
         this.watchForProbeEnd();
         // swap button for desired axis to stop
         if (axis == "z") $('#com-chilipeppr-widget-super-touchplate .btn-Zplaterun').removeClass("btn-danger").text("Run Z");
-        if (axis == "z") $('#com-chilipeppr-widget-super-touchplate .btn-Z-platerun').removeClass("btn-danger").text("Run Z");
         if (axis == "x") $('#com-chilipeppr-widget-super-touchplate .btn-Xplaterun').removeClass("btn-danger").text("Run X");
         if (axis == "y") $('#com-chilipeppr-widget-super-touchplate .btn-Yplaterun').removeClass("btn-danger").text("Run Y");
+        //GLS Added new
+        if (axis == "-x") $('#com-chilipeppr-widget-super-touchplate .btn-X-platerun').removeClass("btn-danger").text("Run -X");
+        if (axis == "-y") $('#com-chilipeppr-widget-super-touchplate .btn-Y-platerun').removeClass("btn-danger").text("Run -Y");
         this.animInfiniteEnd();
         this.isRunning = false;
 
@@ -497,6 +527,9 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
         if (axis == "z") this.runZAxis();
         if (axis == "x") this.runXAxis();
         if (axis == "y") this.runYAxis();
+        //GLS New
+        if (axis == "-x") this.run_XAxis();
+        if (axis == "-y") this.run_YAxis();
 
       }
     },
@@ -638,6 +671,41 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
           D: gcode
         });
       }
+      ///GLS New Run the x probe routine and back off in the oppsite direction
+      if (this.runningAxis == "-x") {
+        var plateWidth = -1 * Number($('#com-chilipeppr-widget-super-touchplate .widthplate').val());
+        //Need to offset X and Y by bit diameter so that bit center will be at desired origin when G0 X0 Y0 Z0 is run.
+        var br = Number($('#com-chilipeppr-widget-super-touchplate .diameter').val()) / 2*-1;
+        var xoffset = br + plateWidth;
+        if (isNaN(plateWidth)) plateWidth = 0;
+        if (isNaN(br)) br = 0;
+        console.log("plateWidth:", plateWidth);
+        //var gcode = "G28.3 X" + plateWidth + "\n";
+        //var gcode = "G28.3 X" + br + "\n";
+        var gcode = "";
+        if(this.coordOffsetNo == 0) {
+          gcode = "G28.3 X" + xoffset + "\n";
+        }
+        else if (this.coordOffsetNo == 10) { //Allowing G92
+          var gcode = "G92 X" + xoffset + "\n";
+        }
+        else {
+          var gcode = "G10 L20 P" + this.coordOffsetNo + " X" + xoffset + "\n";
+        }
+        var id = "tp" + this.gcodeCtr++;
+        chilipeppr.publish("/com-chilipeppr-widget-serialport/jsonSend", {
+          Id: id,
+          D: gcode
+        });
+
+        // now back off a bit
+        var gcode = "G91 G0 X2\n";
+        var id = "tp" + this.gcodeCtr++;
+        chilipeppr.publish("/com-chilipeppr-widget-serialport/jsonSend", {
+          Id: id,
+          D: gcode
+        });
+      }
       if (this.runningAxis == "y") {
         var plateLength = -1 * Number($('#com-chilipeppr-widget-super-touchplate .lengthplate').val());
         //Need to offset X and Y by bit diameter so that bit center will be at desired origin when G0 X0 Y0 Z0 is run.
@@ -666,6 +734,41 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
 
         // now back off a bit
         var gcode = "G91 G0 Y-2\n";
+        var id = "tp" + this.gcodeCtr++;
+        chilipeppr.publish("/com-chilipeppr-widget-serialport/jsonSend", {
+          Id: id,
+          D: gcode
+        });
+      }
+      //GLS New Run the Y probe routine and back off in the oppsite direction
+            if (this.runningAxis == "-y") {
+        var plateLength = -1 * Number($('#com-chilipeppr-widget-super-touchplate .lengthplate').val());
+        //Need to offset X and Y by bit diameter so that bit center will be at desired origin when G0 X0 Y0 Z0 is run.
+        var br = Number($('#com-chilipeppr-widget-super-touchplate .diameter').val()) / 2*-1;
+        var yoffset = br + plateLength;
+        if (isNaN(plateLength)) plateLength = 0;
+        if (isNaN(br)) br = 0;
+        console.log("platLength:", plateLength);
+        //var gcode = "G28.3 Y" + plateLength + "\n";
+        //var gcode = "G28.3 Y" + br + "\n";
+        var gcode = "";
+        if(this.coordOffsetNo == 0) {
+          gcode = "G28.3 Y" + yoffset + "\n";
+        }
+        else if (this.coordOffsetNo == 10) { //Allowing G92
+          var gcode = "G92 Y" + yoffset +  "\n";
+        }
+        else {
+          var gcode = "G10 L20 P" + this.coordOffsetNo + " Y" + yoffset + "\n";
+        }
+        var id = "tp" + this.gcodeCtr++;
+        chilipeppr.publish("/com-chilipeppr-widget-serialport/jsonSend", {
+          Id: id,
+          D: gcode
+        });
+
+        // now back off a bit
+        var gcode = "G91 G0 Y2\n";
         var id = "tp" + this.gcodeCtr++;
         chilipeppr.publish("/com-chilipeppr-widget-serialport/jsonSend", {
           Id: id,
