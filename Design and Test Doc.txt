@@ -1,0 +1,23 @@
+Center Finder Operation consists of the user bringing the spindle and tool head to the approaximate center of a hole.  the center of which is to be probed in order to calculate the exact center of the hole so that this center may be used as a zero reference for various CAM operations.
+
+G21 G91 (Use mm and rel coords)
+ G28.3 X0           (Set MCS X0)
+ G38.2 X20 F50      (Probe 20 mmm in the Westerly direction until a touch is made)
+ G28.3 X-11.5875    (Set the West most position and save to a variable)
+ G91 G0 X-2         (Now back off this surface a bit)
+ G21 G91            (Use mm and rel coords)
+ G38.2 X-20 F50     (Probe 20 mmm in the Easterly direction until a touch is made)
+ G28.3 X8.4125      (Set the East most position and save to a variable)
+ (Then calcuate the difference between (XWest - XEast)/2
+ G91 G0 x= (X8.4125 - X-11.5875 /2) (Go to the mid position)
+ G28.3 X0
+
+ G28.3 Y0 (Now set Y=0)
+ G38.2 Y20 F50 (Probe 20 mmm in the Northerly direction until a touch is made)
+ G28.3 Y-11.5875 (Set the Northerly most position and save to a variable)
+ G91 G0 Y-2 (Now back off this surface a bit)
+ G38.2 Y-20 F50 (Probe 20 mmm in the Southerly direction until a touch is made)
+ G28.3 Y8.4125 (Set the East most position and save to a variable)
+ (Then calcuate the difference between (XWest - XEast)/2
+ G91 G0 Y2
+ G90
