@@ -135,6 +135,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
       //$('#com-chilipeppr-widget-super-touchplate .btn-Z-platerun').click(this.onRun.bind(this, "z"));
       $('#com-chilipeppr-widget-super-touchplate .btn-X-platerun').click(this.onRun.bind(this, "-x"));
       $('#com-chilipeppr-widget-super-touchplate .btn-Y-platerun').click(this.onRun.bind(this, "-y"));
+      $('#com-chilipeppr-widget-super-touchplate .btn-Centerfinder').click(this.onRun.bind(this, "cf"));
       //Tabs
       $('li a').click(function (e) {
         e.preventDefault()
@@ -469,6 +470,41 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
       this.runningAxis = "-y";
       this.animInfiniteStart();
     },
+    //GLS New
+    run_Centerfinder: function() {
+      this.isRunning = true;
+      console.log("Starting cetner finding operation");
+      //swap button to stop
+      $('#com-chilipeppr-widget-super-touchplate .btn-Centerfinder').addClass("btn-danger").text("Stop");
+      //get feedrate
+      var fr = $('#com-chilipeppr-widget-super-touchplate .frprobe').val();
+      
+      //Set this axis to zero so that we search in the correct direction no matter what the absolute coords are.
+      var id = "tp" + this.gcodeCtr++;
+      if(this.coordOffsetNo == 0)  {
+       gcode = "G28.3 Y0 X0"; 
+       chilipeppr.publish("/com-chilipeppr-widget-serialport/jsonSend", {
+         Id: id,
+         D: gcode
+       });
+      }
+      else {
+        gcode = "G10 L2 P" + this.coordOffsetNo + " Y0 X0"
+        chilipeppr.publish("/com-chilipeppr-widget-serialport/jsonSend", {
+         Id: id,
+         D: gcode
+        });
+      }
+      //Start searching! Positive value makes toolhead search in opposite direction from g53 origin, towards touchplate.
+      var id = "tp" + this.gcodeCtr++;
+      gcode = "G38.2 Y-20 F" + fr + "\n";
+      chilipeppr.publish("/com-chilipeppr-widget-serialport/jsonSend", {
+        Id: id,
+        D: gcode
+      });
+      this.runningAxis = "cf";
+      this.animInfiniteStart();
+    },
     onRun: function(axis) {
       if (this.isRunning) {
         // we need to stop
@@ -489,6 +525,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
         //GLS Added new
         if (axis == "-x") $('#com-chilipeppr-widget-super-touchplate .btn-X-platerun').removeClass("btn-danger").text("Run -X");
         if (axis == "-y") $('#com-chilipeppr-widget-super-touchplate .btn-Y-platerun').removeClass("btn-danger").text("Run -Y");
+        if (axis == "cf") $('#com-chilipeppr-widget-super-touchplate .btn-Centerfinder').removeClass("btn-danger").text("Center Finder");
         this.animInfiniteEnd();
         this.isRunning = false;
 
@@ -563,6 +600,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
         //GLS New
         if (axis == "-x") this.run_XAxis();
         if (axis == "-y") this.run_YAxis();
+        if (axis == "cf") this.Centerfinder();
 
       }
     },
@@ -679,7 +717,6 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
           Id: id,
           D: gcode
         });
-//GLS Look at this next
         // now back off a bit
         var gcode = "G91 G0 Z2\n";
         var id = "tp" + this.gcodeCtr++;
@@ -793,6 +830,50 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
       }
       //GLS New Run the Y probe routine and back off in the oppsite direction
             if (this.runningAxis == "-y") {
+        var plateLength = -1 * Number($('#com-chilipeppr-widget-super-touchplate .lengthplate').val());
+        //Need to offset X and Y by bit diameter so that bit center will be at desired origin when G0 X0 Y0 Z0 is run.
+        var br = Number($('#com-chilipeppr-widget-super-touchplate .diameter').val()) / 2*-1;
+        var yoffset = br - plateLength;
+        if (isNaN(plateLength)) plateLength = 0;
+        if (isNaN(br)) br = 0;
+        console.log("platLength:", plateLength);
+        //var gcode = "G28.3 Y" + plateLength + "\n";
+        //var gcode = "G28.3 Y" + br + "\n";
+        var gcode = "";
+        if(this.coordOffsetNo == 0) {
+          gcode = "G28.3 Y" + yoffset + "\n";
+        }
+        else if (this.coordOffsetNo == 10) { //Allowing G92
+          var gcode = "G92 Y" + yoffset +  "\n";
+        }
+        else {
+          var gcode = "G10 L20 P" + this.coordOffsetNo + " Y" + yoffset + "\n";
+        }
+        var id = "tp" + this.gcodeCtr++;
+        chilipeppr.publish("/com-chilipeppr-widget-serialport/jsonSend", {
+          Id: id,
+          D: gcode
+        });
+
+        // now back off a bit
+        var gcode = "G91 G0 Y2\n";
+        var id = "tp" + this.gcodeCtr++;
+        chilipeppr.publish("/com-chilipeppr-widget-serialport/jsonSend", {
+          Id: id,
+          D: gcode
+        });
+      }
+
+      // back to absolute mode
+      var gcode = "G90\n";
+      var id = "tp" + this.gcodeCtr++;
+      chilipeppr.publish("/com-chilipeppr-widget-serialport/jsonSend", {
+        Id: id,
+        D: gcode
+      });
+      // Come back to this....
+      //GLS Center finding routine - probe + x+20 then x -20 then devide the difference by 2 and same for Y then set zero
+            if (this.runningAxis == "cf") {
         var plateLength = -1 * Number($('#com-chilipeppr-widget-super-touchplate .lengthplate').val());
         //Need to offset X and Y by bit diameter so that bit center will be at desired origin when G0 X0 Y0 Z0 is run.
         var br = Number($('#com-chilipeppr-widget-super-touchplate .diameter').val()) / 2*-1;
