@@ -470,7 +470,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
       this.runningAxis = "-y";
       this.animInfiniteStart();
     },
-    //GLS New
+    //Center Finding Probing Routine 
     run_Centerfinder: function() {
       this.isRunning = true;
       console.log("Starting center finding operation");
@@ -478,7 +478,10 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
       $('#com-chilipeppr-widget-super-touchplate .btn-Centerfinder').addClass("btn-danger").text("  Stop  ");
       //get feedrate
       var fr = $('#com-chilipeppr-widget-super-touchplate .frprobe').val();
-      
+      var first_y = 0
+      var second_y = 0
+      var first_x = 0
+      var second_x = 0
       //Set this axis to zero so that we search in the correct direction no matter what the absolute coords are.
       var id = "tp" + this.gcodeCtr++;
       if(this.coordOffsetNo == 0)  {
@@ -495,16 +498,76 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
          D: gcode
         });
       }
-      //Start searching! Positive value makes toolhead search in opposite direction from g53 origin, towards touchplate.
+      //Start searching! Y first
+      
+      //Step 1 Probe + Y
       var id = "tp" + this.gcodeCtr++;
+      gcode = "G38.2 Y20 F" + fr + "\n";
+      chilipeppr.publish("/com-chilipeppr-widget-serialport/jsonSend", {
+        Id: id,
+        D: gcode
+      });
+     
+     //Now lets look for the coordinates returned from SPJS prb
+      if ('prb' in json && 'e' in json.prb && this.runningAxis == "cf") {
+        this.first_y = json.prb.y;
+        console.log("First Touch y: " + this.first_y);
+      }
+      //Step 2 Probe - Y
+      var id = "tp" + this.gcodeCtr++;
+      
       gcode = "G38.2 Y-20 F" + fr + "\n";
       chilipeppr.publish("/com-chilipeppr-widget-serialport/jsonSend", {
         Id: id,
         D: gcode
       });
+     
+     //Now lets look for the coordinates returned from SPJS prb
+      if ('prb' in json && 'e' in json.prb && this.runningAxis == "cf") {
+        this.second_y = json.prb.y;
+        console.log("Second Touch y: " + this.second_y);
+      }  
+       //Step 3 Probe + x
+      var id = "tp" + this.gcodeCtr++;
+      
+      gcode = "G38.2 x+20 F" + fr + "\n";
+      chilipeppr.publish("/com-chilipeppr-widget-serialport/jsonSend", {
+        Id: id,
+        D: gcode
+      });
+     
+     //Now lets look for the coordinates returned from SPJS prb
+      if ('prb' in json && 'e' in json.prb && this.runningAxis == "cf") {
+        this.first_x = json.prb.x;
+        console.log("First Touch x: " + this.first_x);
+      }    
+      //Step 4 Probe - x
+      var id = "tp" + this.gcodeCtr++;
+      
+      gcode = "G38.2 x-20 F" + fr + "\n";
+      chilipeppr.publish("/com-chilipeppr-widget-serialport/jsonSend", {
+        Id: id,
+        D: gcode
+      });
+     
+     //Now lets look for the coordinates returned from SPJS prb
+      if ('prb' in json && 'e' in json.prb && this.runningAxis == "cf") {
+        this.second_x = json.prb.x;
+        console.log("Second Touch x: " + this.second_x);
+      }
+    
+        
+      //  $('#com-chilipeppr-widget-super-touchplate .btn-Zplaterun').removeClass("btn-danger").text("Run Z");
+      //  this.animInfiniteEnd();
+      //  this.onAfterProbeDone(json.prb);
+      //  this.isRunning = false;
+    
+     
+
       this.runningAxis = "cf";
       this.animInfiniteStart();
     },
+    
     onRun: function(axis) {
       if (this.isRunning) {
         // we need to stop
