@@ -475,7 +475,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
       this.isRunning = true;
       console.log("Starting center finding operation");
       //swap button to stop
-      $('#com-chilipeppr-widget-super-touchplate .btn-Centerfinder').addClass("btn-danger").text("    Stop    ");
+      $('#com-chilipeppr-widget-super-touchplate .btn-Centerfinder').addClass("btn-danger").text("  Stop  ");
       //get feedrate
       var fr = $('#com-chilipeppr-widget-super-touchplate .frprobe').val();
       
