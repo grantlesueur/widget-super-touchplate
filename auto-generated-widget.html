@@ -531,7 +531,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
     //GLS New
     run_Centerfinder: function() {
       this.isRunning = true;
-      console.log("Starting cetner finding operation");
+      console.log("Starting center finding operation");
       //swap button to stop
       $('#com-chilipeppr-widget-super-touchplate .btn-Centerfinder').addClass("btn-danger").text("Stop");
       //get feedrate
@@ -658,7 +658,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
         //GLS New
         if (axis == "-x") this.run_XAxis();
         if (axis == "-y") this.run_YAxis();
-        if (axis == "cf") this.Centerfinder();
+        if (axis == "cf") this.run_Centerfinder();
 
       }
     },
@@ -936,7 +936,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
         // no need to  compensate for a plate. junk: var plateLength = -1 * Number($('#com-chilipeppr-widget-super-touchplate .lengthplate').val());
         //Need to offset X and Y by bit diameter so that bit center will be at desired origin when G0 X0 Y0 Z0 is run.
         //No need to compensate for bit radius: var br = Number($('#com-chilipeppr-widget-super-touchplate .diameter').val()) / 2*-1;
-        var yoffset = 0
+        //var yoffset = 0
         //if (isNaN(plateLength)) plateLength = 0;
         //if (isNaN(br)) br = 0;
         //console.log("platLength:", plateLength);
