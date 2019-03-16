@@ -871,27 +871,28 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
         Id: id,
         D: gcode
       });
-      // Come back to this....
+      
+      
       //GLS Center finding routine - probe + x+20 then x -20 then devide the difference by 2 and same for Y then set zero
             if (this.runningAxis == "cf") {
-        var plateLength = -1 * Number($('#com-chilipeppr-widget-super-touchplate .lengthplate').val());
+        // no need to  compensate for a plate. junk: var plateLength = -1 * Number($('#com-chilipeppr-widget-super-touchplate .lengthplate').val());
         //Need to offset X and Y by bit diameter so that bit center will be at desired origin when G0 X0 Y0 Z0 is run.
-        var br = Number($('#com-chilipeppr-widget-super-touchplate .diameter').val()) / 2*-1;
-        var yoffset = br - plateLength;
-        if (isNaN(plateLength)) plateLength = 0;
-        if (isNaN(br)) br = 0;
-        console.log("platLength:", plateLength);
+        //No need to compensate for bit radius: var br = Number($('#com-chilipeppr-widget-super-touchplate .diameter').val()) / 2*-1;
+        var yoffset = 0
+        //if (isNaN(plateLength)) plateLength = 0;
+        //if (isNaN(br)) br = 0;
+        //console.log("platLength:", plateLength);
         //var gcode = "G28.3 Y" + plateLength + "\n";
         //var gcode = "G28.3 Y" + br + "\n";
         var gcode = "";
         if(this.coordOffsetNo == 0) {
-          gcode = "G28.3 Y" + yoffset + "\n";
+          gcode = "G28.3 Y0 X0" + "\n";
         }
         else if (this.coordOffsetNo == 10) { //Allowing G92
-          var gcode = "G92 Y" + yoffset +  "\n";
+          var gcode = "G92 Y0 X0" +  "\n";
         }
         else {
-          var gcode = "G10 L20 P" + this.coordOffsetNo + " Y" + yoffset + "\n";
+          var gcode = "G10 L20 P" + this.coordOffsetNo + " Y0 X0" + "\n";
         }
         var id = "tp" + this.gcodeCtr++;
         chilipeppr.publish("/com-chilipeppr-widget-serialport/jsonSend", {
@@ -900,12 +901,12 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
         });
 
         // now back off a bit
-        var gcode = "G91 G0 Y2\n";
-        var id = "tp" + this.gcodeCtr++;
-        chilipeppr.publish("/com-chilipeppr-widget-serialport/jsonSend", {
-          Id: id,
-          D: gcode
-        });
+        //var gcode = "G91 G0 Y2\n";
+        //var id = "tp" + this.gcodeCtr++;
+        //chilipeppr.publish("/com-chilipeppr-widget-serialport/jsonSend", {
+        //  Id: id,
+        //  D: gcode
+        //});
       }
 
       // back to absolute mode
