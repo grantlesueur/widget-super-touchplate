@@ -330,6 +330,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
     },
     gcodeCtr: 0,
     isRunning: false,
+    
     runZAxis: function() {
       this.isRunning = true;
       console.log("Starting Z-probing operation");
@@ -424,7 +425,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
       this.runningAxis = "x";
       this.animInfiniteStart();
     },
-    //GLS New
+    
     run_XAxis: function() {
       this.isRunning = true;
       console.log("Starting -X-probing operation");
@@ -459,6 +460,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
       this.runningAxis = "-x";
       this.animInfiniteStart();
     },
+    
     runYAxis: function() {
       this.isRunning = true;
       console.log("Starting Y-probing operation");
@@ -493,7 +495,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
       this.runningAxis = "y";
       this.animInfiniteStart();
     },
-    //GLS New
+    
     run_YAxis: function() {
       this.isRunning = true;
       console.log("Starting Y-probing operation");
@@ -528,6 +530,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
       this.runningAxis = "-y";
       this.animInfiniteStart();
     },
+    
     //Center Finding Probing Routine 
     run_Centerfinder: function() {
       this.isRunning = true;
@@ -536,10 +539,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
       $('#com-chilipeppr-widget-super-touchplate .btn-Centerfinder').addClass("btn-danger").text("  Stop  ");
       //get feedrate
       var fr = $('#com-chilipeppr-widget-super-touchplate .frprobe').val();
-      var first_y = 0
-      var second_y = 0
-      var first_x = 0
-      var second_x = 0
+      
       //Set this axis to zero so that we search in the correct direction no matter what the absolute coords are.
       var id = "tp" + this.gcodeCtr++;
       if(this.coordOffsetNo == 0)  {
@@ -555,77 +555,10 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
          Id: id,
          D: gcode
         });
-      }
-      //Start searching! Y first
-      
-      //Step 1 Probe + Y
-      var id = "tp" + this.gcodeCtr++;
-      gcode = "G38.2 Y20 F" + fr + "\n";
-      chilipeppr.publish("/com-chilipeppr-widget-serialport/jsonSend", {
-        Id: id,
-        D: gcode
-      });
-     
-     //Now lets look for the coordinates returned from SPJS prb
-      if ('prb' in json && 'e' in json.prb && this.runningAxis == "cf") {
-        this.first_y = json.prb.y;
-        console.log("First Touch y: " + this.first_y);
-      }
-      //Step 2 Probe - Y
-      var id = "tp" + this.gcodeCtr++;
-      
-      gcode = "G38.2 Y-20 F" + fr + "\n";
-      chilipeppr.publish("/com-chilipeppr-widget-serialport/jsonSend", {
-        Id: id,
-        D: gcode
-      });
-     
-     //Now lets look for the coordinates returned from SPJS prb
-      if ('prb' in json && 'e' in json.prb && this.runningAxis == "cf") {
-        this.second_y = json.prb.y;
-        console.log("Second Touch y: " + this.second_y);
-      }  
-       //Step 3 Probe + x
-      var id = "tp" + this.gcodeCtr++;
-      
-      gcode = "G38.2 x+20 F" + fr + "\n";
-      chilipeppr.publish("/com-chilipeppr-widget-serialport/jsonSend", {
-        Id: id,
-        D: gcode
-      });
-     
-     //Now lets look for the coordinates returned from SPJS prb
-      if ('prb' in json && 'e' in json.prb && this.runningAxis == "cf") {
-        this.first_x = json.prb.x;
-        console.log("First Touch x: " + this.first_x);
-      }    
-      //Step 4 Probe - x
-      var id = "tp" + this.gcodeCtr++;
-      
-      gcode = "G38.2 x-20 F" + fr + "\n";
-      chilipeppr.publish("/com-chilipeppr-widget-serialport/jsonSend", {
-        Id: id,
-        D: gcode
-      });
-     
-     //Now lets look for the coordinates returned from SPJS prb
-      if ('prb' in json && 'e' in json.prb && this.runningAxis == "cf") {
-        this.second_x = json.prb.x;
-        console.log("Second Touch x: " + this.second_x);
-      }
-    
-        
-      //  $('#com-chilipeppr-widget-super-touchplate .btn-Zplaterun').removeClass("btn-danger").text("Run Z");
-      //  this.animInfiniteEnd();
-      //  this.onAfterProbeDone(json.prb);
-      //  this.isRunning = false;
-    
-     
-
       this.runningAxis = "cf";
       this.animInfiniteStart();
+      }
     },
-    
     onRun: function(axis) {
       if (this.isRunning) {
         // we need to stop
@@ -790,6 +723,15 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
         //this.yOffset = json.prb.y;
         console.log("Y Offset from JSON: " + this.yOffset);
         $('#com-chilipeppr-widget-super-touchplate .btn-Y-platerun').removeClass("btn-danger").text("Run -Y");
+        this.animInfiniteEnd();
+        this.onAfterProbeDone(json.prb);
+        this.isRunning = false;
+      }
+       //GLS new
+      if ('prb' in json && 'e' in json.prb && this.runningAxis == "cf") {
+        //this.yOffset = json.prb.y;
+        console.log("Y Offset from JSON: " + this.yOffset);
+        $('#com-chilipeppr-widget-super-touchplate .btn-Centerfinder').removeClass("btn-danger").text("Center Finder");
         this.animInfiniteEnd();
         this.onAfterProbeDone(json.prb);
         this.isRunning = false;
@@ -996,15 +938,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
       
       //GLS Center finding routine - probe + x+20 then x -20 then devide the difference by 2 and same for Y then set zero
             if (this.runningAxis == "cf") {
-        // no need to  compensate for a plate. junk: var plateLength = -1 * Number($('#com-chilipeppr-widget-super-touchplate .lengthplate').val());
-        //Need to offset X and Y by bit diameter so that bit center will be at desired origin when G0 X0 Y0 Z0 is run.
-        //No need to compensate for bit radius: var br = Number($('#com-chilipeppr-widget-super-touchplate .diameter').val()) / 2*-1;
-        //var yoffset = 0
-        //if (isNaN(plateLength)) plateLength = 0;
-        //if (isNaN(br)) br = 0;
-        //console.log("platLength:", plateLength);
-        //var gcode = "G28.3 Y" + plateLength + "\n";
-        //var gcode = "G28.3 Y" + br + "\n";
+        
         var gcode = "";
         if(this.coordOffsetNo == 0) {
           gcode = "G28.3 Y0 X0" + "\n";
