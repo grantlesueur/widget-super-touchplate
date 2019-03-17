@@ -830,7 +830,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
         var plateWidth = -1 * Number($('#com-chilipeppr-widget-super-touchplate .widthplate').val());
         //Need to offset X and Y by bit diameter so that bit center will be at desired origin when G0 X0 Y0 Z0 is run.
         var br = Number($('#com-chilipeppr-widget-super-touchplate .diameter').val()) / 2*-1;
-        var xoffset = br - plateWidth;
+        var xoffset = br + plateWidth;
         if (isNaN(plateWidth)) plateWidth = 0;
         if (isNaN(br)) br = 0;
         console.log("plateWidth:", plateWidth);
@@ -838,13 +838,13 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
         //var gcode = "G28.3 X" + br + "\n";
         var gcode = "";
         if(this.coordOffsetNo == 0) {
-          gcode = "G28.3 X" + xoffset + "\n";
+          gcode = "G28.3 X" - xoffset + "\n";
         }
         else if (this.coordOffsetNo == 10) { //Allowing G92
-          var gcode = "G92 X" + xoffset + "\n";
+          var gcode = "G92 X" - xoffset + "\n";
         }
         else {
-          var gcode = "G10 L20 P" + this.coordOffsetNo + " X" + xoffset + "\n";
+          var gcode = "G10 L20 P" + this.coordOffsetNo + " X" - xoffset + "\n";
         }
         var id = "tp" + this.gcodeCtr++;
         chilipeppr.publish("/com-chilipeppr-widget-serialport/jsonSend", {
@@ -907,13 +907,13 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
         //var gcode = "G28.3 Y" + br + "\n";
         var gcode = "";
         if(this.coordOffsetNo == 0) {
-          gcode = "G28.3 Y" + yoffset + "\n";
+          gcode = "G28.3 Y" - yoffset + "\n";
         }
         else if (this.coordOffsetNo == 10) { //Allowing G92
-          var gcode = "G92 Y" + yoffset +  "\n";
+          var gcode = "G92 Y" - yoffset +  "\n";
         }
         else {
-          var gcode = "G10 L20 P" + this.coordOffsetNo + " Y" + yoffset + "\n";
+          var gcode = "G10 L20 P" + this.coordOffsetNo + " Y" - yoffset + "\n";
         }
         var id = "tp" + this.gcodeCtr++;
         chilipeppr.publish("/com-chilipeppr-widget-serialport/jsonSend", {
