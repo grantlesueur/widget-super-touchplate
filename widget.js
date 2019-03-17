@@ -500,14 +500,40 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
       }
      
       //XXXX Start searching! Positive value makes toolhead search in opposite direction from g53 origin, towards touchplate.
-    
+          //Lets set up some vars to capture each probe result
+          var first_y = 0;
+          var first_x = 0;
+          var second_y = 0;
+          var second_x = 0;
+          
+          //Step 1 send a probe request
           var id = "tp" + this.gcodeCtr++;
           gcode = "G38.2 Y20 F" + fr + "\n";
           chilipeppr.publish("/com-chilipeppr-widget-serialport/jsonSend", {
             Id: id,
             D: gcode
           });
-          
+              //Capture the first Y postion
+          if ('prb' in json && 'e' in json.prb && this.runningAxis == "cf") {
+            console.log("Y Offset from JSON: " + this.yOffset);
+          first_y= this.yOffset
+          }
+          //Now go back to where we started
+          if(this.coordOffsetNo == 0)  {
+            gcode = "G53 G0 Y0"; 
+              chilipeppr.publish("/com-chilipeppr-widget-serialport/jsonSend", {
+              Id: id,
+              D: gcode
+            });
+          }
+          else {
+            gcode = "G0 Y0"
+            chilipeppr.publish("/com-chilipeppr-widget-serialport/jsonSend", {
+              Id: id,
+              D: gcode
+            });
+          }
+      
           
           var id = "tp" + this.gcodeCtr++;
           gcode = "G38.2 Y-20 F" + fr + "\n";
