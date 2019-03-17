@@ -505,7 +505,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
           var first_x = 0;
           var second_y = 0;
           var second_x = 0;
-          var json = $.parseJSON(data.dataline);
+          
           
           //Step 1 send a probe request
           var id = "tp" + this.gcodeCtr++;
@@ -514,12 +514,13 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
             Id: id,
             D: gcode
           });
+          this.audio.play();
               //Capture the first Y postion
-          if ('prb' in json && 'e' in json.prb) {
+          /* if ('prb' in json && 'e' in json.prb) {
             console.log("Y Offset from JSON: " + this.yOffset);
           first_y= this.yOffset
           }
-          this.audio.play();
+          this.audio.play(); */
           //Now go back to where we started
           if(this.coordOffsetNo == 0)  {
             gcode = "G53 G0 Y0"; 
