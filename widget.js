@@ -497,14 +497,23 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
          Id: id,
          D: gcode
         });
-      this.runningAxis = "y";
+     
+      //Start searching! Positive value makes toolhead search in opposite direction from g53 origin, towards touchplate.
+      var id = "tp" + this.gcodeCtr++;
+      gcode = "G38.2 Y20 F" + fr + "\n";
+      chilipeppr.publish("/com-chilipeppr-widget-serialport/jsonSend", {
+        Id: id,
+        D: gcode
+      });
+      this.runningAxis = "cf";
       this.animInfiniteStart();
-      this.runningAxis = "-y";
-      this.animInfiniteStart();
-      this.runningAxis = "x";
-      this.animInfiniteStart();
-      this.runningAxis = "-x";
-      this.animInfiniteStart();
+      
+      //this.runningAxis = "-y";
+      //this.animInfiniteStart();
+      //this.runningAxis = "x";
+      //this.animInfiniteStart();
+      //this.runningAxis = "-x";
+      //this.animInfiniteStart();
       }
     },
     onRun: function(axis) {
@@ -675,7 +684,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
         this.onAfterProbeDone(json.prb);
         this.isRunning = false;
       }
-       //GLS new
+       //GLS new here is we will add the probing steps
       if ('prb' in json && 'e' in json.prb && this.runningAxis == "cf") {
         //this.yOffset = json.prb.y;
         console.log("Y Offset from JSON: " + this.yOffset);
