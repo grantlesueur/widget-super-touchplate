@@ -497,6 +497,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
          Id: id,
          D: gcode
         });
+      }
      
       //Start searching! Positive value makes toolhead search in opposite direction from g53 origin, towards touchplate.
       
@@ -530,7 +531,6 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
           
           this.runningAxis = "cf";
           this.animInfiniteStart();
-      }
     },
     onRun: function(axis) {
       if (this.isRunning) {
