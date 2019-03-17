@@ -571,6 +571,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
             Id: id,
             D: gcode
           });
+          this.audio.play();
               //Capture the first Y postion
           if ('prb' in json && 'e' in json.prb && this.runningAxis == "cf") {
             console.log("Y Offset from JSON: " + this.yOffset);
