@@ -555,7 +555,13 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
          Id: id,
          D: gcode
         });
-      this.runningAxis = "cf";
+      this.runningAxis = "y";
+      this.animInfiniteStart();
+      this.runningAxis = "-y";
+      this.animInfiniteStart();
+      this.runningAxis = "x";
+      this.animInfiniteStart();
+      this.runningAxis = "-x";
       this.animInfiniteStart();
       }
     },
