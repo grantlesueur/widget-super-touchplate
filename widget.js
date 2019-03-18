@@ -473,7 +473,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
       this.animInfiniteStart();
     },
     
-    //Center Finding Probing Routine 
+    /* //Center Finding Probing Routine 
     run_Centerfinder: function() {
       this.isRunning = true;
       console.log("Starting center finding operation");
@@ -520,7 +520,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
             console.log("Y Offset from JSON: " + this.yOffset);
           first_y= this.yOffset
           }
-          this.audio.play(); */
+          this.audio.play(); 
           //Now go back to where we started
           if(this.coordOffsetNo == 0)  {
             gcode = "G53 G0 Y0"; 
@@ -561,7 +561,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
           
           this.runningAxis = "cf";
           this.animInfiniteStart();
-    },
+    }, */
     onRun: function(axis) {
       if (this.isRunning) {
         // we need to stop
