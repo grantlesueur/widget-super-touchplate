@@ -689,7 +689,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
       if ('r' in json && 'prb' in json.r) json = json.r;
 
       if ('prb' in json && 'e' in json.prb && this.runningAxis == "z") {
-        //this.zOffset = json.prb.z;
+        this.zOffset = json.prb.z;
         console.log("Z Offset from JSON: " + this.zOffset);
         $('#com-chilipeppr-widget-super-touchplate .btn-Zplaterun').removeClass("btn-danger").text("Run Z");
         this.animInfiniteEnd();
@@ -697,7 +697,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
         this.isRunning = false;
       }
       if ('prb' in json && 'e' in json.prb && this.runningAxis == "x") {
-        //this.xOffset = json.prb.x;
+        this.xOffset = json.prb.x;
         console.log("X Offset from JSON: " + this.xOffset);
         $('#com-chilipeppr-widget-super-touchplate .btn-Xplaterun').removeClass("btn-danger").text("Run X");
         this.animInfiniteEnd();
@@ -706,7 +706,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
       }  
         //GLS NEW Reset Button
       if ('prb' in json && 'e' in json.prb && this.runningAxis == "-x") {
-        //this.xOffset = json.prb.x;
+        this.xOffset = json.prb.x;
         console.log("X Offset from JSON: " + this.xOffset);
         $('#com-chilipeppr-widget-super-touchplate .btn-X-platerun').removeClass("btn-danger").text("Run -X");
         this.animInfiniteEnd();
@@ -714,7 +714,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
         this.isRunning = false;  
       }
       if ('prb' in json && 'e' in json.prb && this.runningAxis == "y") {
-        //this.yOffset = json.prb.y;
+        this.yOffset = json.prb.y;
         console.log("Y Offset from JSON: " + this.yOffset);
         $('#com-chilipeppr-widget-super-touchplate .btn-Yplaterun').removeClass("btn-danger").text("Run Y");
         this.animInfiniteEnd();
@@ -732,7 +732,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
       }
        //GLS new here is we will add the probing steps
       if ('prb' in json && 'e' in json.prb && this.runningAxis == "cf") {
-        //this.yOffset = json.prb.y;
+        this.yOffset = json.prb.y;
         console.log("Y Offset from JSON: " + this.yOffset);
         $('#com-chilipeppr-widget-super-touchplate .btn-Centerfinder').removeClass("btn-danger").text("Center Finder");
         this.animInfiniteEnd();
