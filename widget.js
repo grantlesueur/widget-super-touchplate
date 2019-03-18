@@ -872,7 +872,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
         //var gcode = "G28.3 Y" + br + "\n";
         var gcode = "";
         if(this.coordOffsetNo == 0) {
-          gcode = "G28.3 Y" + yoffset + yOffset + "\n";
+          gcode = "G28.3 Y" + yoffset + "\n";
         }
         else if (this.coordOffsetNo == 10) { //Allowing G92
           var gcode = "G92 Y" + yoffset +  "\n";
