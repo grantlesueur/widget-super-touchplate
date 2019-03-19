@@ -665,10 +665,12 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
       // We need to subscribe to the /recvline cuz we need to analyze everything coming back
       chilipeppr.subscribe("/com-chilipeppr-widget-serialport/recvline", this, this.onRecvLineForProbe);
       //GLS Lets subscribe to the DRO
-      chilipeppr.subscribe("com-chilipeppr-interface-cnccontroller/axes", this, this.DRO);
+      chilipeppr.subscribe("com-chilipeppr-interface-cnccontroller/axes", this, this.onAxes);
     },
     watchForProbeEnd: function() {
       chilipeppr.unsubscribe("/com-chilipeppr-widget-serialport/recvline", this, this.onRecvLineForProbe);
+       //GLS Lets subscribe to the DRO
+      chilipeppr.unsubscribe("com-chilipeppr-interface-cnccontroller/axes", this, this.onAxes);
     },
     onRecvLineForProbe: function(data) {
       console.log("onRecvLineForProbe. data:", data);
