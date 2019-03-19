@@ -901,8 +901,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
         var plateLength = -1 * Number($('#com-chilipeppr-widget-super-touchplate .lengthplate').val());
         //Need to offset X and Y by bit diameter so that bit center will be at desired origin when G0 X0 Y0 Z0 is run.
         var br = Number($('#com-chilipeppr-widget-super-touchplate .diameter').val()) / 2*-1;
-        //Need to offset X and Y by bit diameter so that bit center will be at desired origin when G0 X0 Y0 Z0 is run.
-        var yoffset = -(br + plateLength); 
+        var yoffset = br + plateLength;
         if (isNaN(plateLength)) plateLength = 0;
         if (isNaN(br)) br = 0;
         console.log("platLength:", plateLength);
