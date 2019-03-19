@@ -722,7 +722,8 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
     watchForProbeStart: function() {
       // We need to subscribe to the /recvline cuz we need to analyze everything coming back
       chilipeppr.subscribe("/com-chilipeppr-widget-serialport/recvline", this, this.onRecvLineForProbe);
-
+      //GLS Lets subscribe to the DRO
+      chilipeppr.subscribe("com-chilipeppr-interface-cnccontroller/axes", this, this.DRO);
     },
     watchForProbeEnd: function() {
       chilipeppr.unsubscribe("/com-chilipeppr-widget-serialport/recvline", this, this.onRecvLineForProbe);
@@ -973,6 +974,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
           var gcode = "G92 Y" + yoffset +  "\n";
         }
         else {
+          
           var gcode = "G10 L20 P" + this.coordOffsetNo + " Y" + yoffset + "\n";
         }
         var id = "tp" + this.gcodeCtr++;
