@@ -689,7 +689,10 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
 
       // sometimes we get {"r":{"prb"  instead of {"prb": so just
       // detect and remap
-      if ('r' in json && 'prb' in json.r) json = json.r;
+      if ('r' in json && 'prb' in json.r) {
+        json = json.r;
+        console.log("grant look at this:", json);
+      }
       console.log("grant look at this:", json);
 
       if ('prb' in json && 'e' in json.prb && this.runningAxis == "z") {
