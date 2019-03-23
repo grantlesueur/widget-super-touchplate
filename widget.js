@@ -923,7 +923,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
         }
         else {
           
-          var gcode = "G10 L20 P" + this.coordOffsetNo + " Y" + yOffset + "\n";
+          var gcode = "G10 L20 P" + this.coordOffsetNo + " Y" + this.yOffset + "\n";
         }
         var id = "tp" + this.gcodeCtr++;
         chilipeppr.publish("/com-chilipeppr-widget-serialport/jsonSend", {
