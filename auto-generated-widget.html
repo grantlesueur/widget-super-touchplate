@@ -784,7 +784,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
       }
       //GLS new
       if ('prb' in json && 'e' in json.prb && this.runningAxis == "-y") {
-        this.yOffset = val(json.prb.y);
+        this.yOffset = valueOf(json.prb.y);
         console.log("Y Offset from JSON: " + this.yOffset);
         $('#com-chilipeppr-widget-super-touchplate .btn-Y-platerun').removeClass("btn-danger").text("Run -Y");
         this.animInfiniteEnd();
