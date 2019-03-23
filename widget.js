@@ -665,12 +665,12 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
       // We need to subscribe to the /recvline cuz we need to analyze everything coming back
       chilipeppr.subscribe("/com-chilipeppr-widget-serialport/recvline", this, this.onRecvLineForProbe);
       //GLS Lets subscribe to the DRO
-      chilipeppr.subscribe("com-chilipeppr-interface-cnccontroller/axes", this, this.onAxes);
+      chilipeppr.subscribe("/com-chilipeppr-interface-cnccontroller/axes", this, this.onAxes);
     },
     watchForProbeEnd: function() {
       chilipeppr.unsubscribe("/com-chilipeppr-widget-serialport/recvline", this, this.onRecvLineForProbe);
        //GLS Lets subscribe to the DRO
-      chilipeppr.unsubscribe("com-chilipeppr-interface-cnccontroller/axes", this, this.onAxes);
+      chilipeppr.unsubscribe("/com-chilipeppr-interface-cnccontroller/axes", this, this.onAxes);
     },
     onRecvLineForProbe: function(data) {
       console.log("onRecvLineForProbe. data:", data);
@@ -690,6 +690,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
       // sometimes we get {"r":{"prb"  instead of {"prb": so just
       // detect and remap
       if ('r' in json && 'prb' in json.r) json = json.r;
+      console.log("grant look at this:", json);
 
       if ('prb' in json && 'e' in json.prb && this.runningAxis == "z") {
         this.zOffset = json.prb.z;
@@ -726,7 +727,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
       }
       //GLS new
       if ('prb' in json && 'e' in json.prb && this.runningAxis == "-y") {
-        this.yOffset = valueOf(json.prb.y);
+        this.yOffset = json.prb.y;
         console.log("Y Offset from JSON: " + this.yOffset);
         $('#com-chilipeppr-widget-super-touchplate .btn-Y-platerun').removeClass("btn-danger").text("Run -Y");
         this.animInfiniteEnd();
