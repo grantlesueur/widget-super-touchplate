@@ -472,7 +472,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
       this.runningAxis = "-y";
       this.animInfiniteStart();
     },
-    
+
     /* //Center Finding Probing Routine 
     run_Centerfinder: function() {
       this.isRunning = true;
@@ -585,6 +585,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
         if (axis == "cf") $('#com-chilipeppr-widget-super-touchplate .btn-Centerfinder').removeClass("btn-danger").text("Center Finder");
         this.animInfiniteEnd();
         this.isRunning = false;
+        
 
       }
       else {
