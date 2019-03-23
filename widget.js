@@ -650,7 +650,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
         //that.watchForProbeStart(); //This is broken, inlining.
         console.log(axis);
         this.watchForProbeStart();
-        //chilipeppr.subscribe("/com-chilipeppr-widget-serialport/recvline", this, this.onRecvLineForProbe);
+        chilipeppr.subscribe("/com-chilipeppr-widget-serialport/recvline", this, this.onRecvLineForProbe);
         if (axis == "z") this.runZAxis();
         if (axis == "x") this.runXAxis();
         if (axis == "y") this.runYAxis();
