@@ -692,7 +692,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
       // detect and remap
       if ('r' in json && 'prb' in json.r) {
         json = json.r;
-        console.log("grant look at this:", json);
+        //console.log("grant look at this:", json);
       }
       console.log("grant look at this:", json);
       console.log("grant look at this:", runningAxis);
