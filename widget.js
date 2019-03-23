@@ -695,7 +695,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
         //console.log("grant look at this:", json);
       }
       console.log("grant look at this:", json);
-      console.log("grant look at this:", runningAxis);
+      console.log("grant look at this Running Axis =:", runningAxis);
 
       if ('prb' in json && 'e' in json.prb && this.runningAxis == "z") {
         this.zOffset = json.prb.z;
