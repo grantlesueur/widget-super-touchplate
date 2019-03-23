@@ -785,7 +785,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
           var gcode = "G92 Z" + plateHeight + "\n";
         }
         else {
-          var gcode = "G10 L2 P" + this.coordOffsetNo + " Z" + plateHeight + "\n";
+          var gcode = "G10 L2 P" + this.coordOffsetNo + " Z" + (plateHeight + this.zOffset) + "\n";
         }
         var id = "tp" + this.gcodeCtr++;
         chilipeppr.publish("/com-chilipeppr-widget-serialport/jsonSend", {
@@ -818,7 +818,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
           var gcode = "G92 X" + xoffset + "\n";
         }
         else {
-          var gcode = "G10 L20 P" + this.coordOffsetNo + " X" + xoffset + "\n";
+          var gcode = "G10 L20 P" + this.coordOffsetNo + " X" + (xoffset + this.xOffset) + "\n";
         }
         var id = "tp" + this.gcodeCtr++;
         chilipeppr.publish("/com-chilipeppr-widget-serialport/jsonSend", {
@@ -855,7 +855,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
           var gcode = "G92 X" + xoffset + "\n";
         }
         else {
-          var gcode = "G10 L20 P" + this.coordOffsetNo + " X" + xoffset + "\n";
+          var gcode = "G10 L20 P" + this.coordOffsetNo + " X" + (xoffset + this.xOffset) + "\n";
         }
         var id = "tp" + this.gcodeCtr++;
         chilipeppr.publish("/com-chilipeppr-widget-serialport/jsonSend", {
@@ -889,7 +889,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
           var gcode = "G92 Y" + yoffset +  "\n";
         }
         else {
-          var gcode = "G10 L20 P" + this.coordOffsetNo + " Y" + yoffset + "\n";
+          var gcode = "G10 L20 P" + this.coordOffsetNo + " Y" + (yoffset + this.yOffset) + "\n";
         }
         var id = "tp" + this.gcodeCtr++;
         chilipeppr.publish("/com-chilipeppr-widget-serialport/jsonSend", {
@@ -925,7 +925,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
         }
         else {
           
-          var gcode = "G10 L20 P" + this.coordOffsetNo + " Y" + this.yOffset + "\n";
+          var gcode = "G10 L20 P" + this.coordOffsetNo + " Y" + (yoffset + this.yOffset) + "\n";
         }
         var id = "tp" + this.gcodeCtr++;
         chilipeppr.publish("/com-chilipeppr-widget-serialport/jsonSend", {
