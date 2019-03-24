@@ -770,6 +770,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
       // play good beep
       this.audio.play();
       console.log("gls running AXIS ", this.runningAxis + this.zOffset)
+      console.log("gls running zAxis ", this.zOffset)
 
       // we take the value returned and then add the plate height and make that
       // machine coordinates offset
