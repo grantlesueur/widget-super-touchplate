@@ -349,13 +349,14 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
          D: gcode
        });
       }
+      /*GLS I dont think we need this bit seeing we are working from MCS and pulling PCS to zero WCS from probing feedback
       else {
         gcode = "G10 L2 P" + this.coordOffsetNo + " Z0"
         chilipeppr.publish("/com-chilipeppr-widget-serialport/jsonSend", {
          Id: id,
          D: gcode
         });
-      }
+      } */
       //Start searching!
       var id = "tp" + this.gcodeCtr++;
       gcode = "G38.2 Z-20 F" + fr + "\n";
@@ -709,7 +710,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
         //that.watchForProbeStart(); //This is broken, inlining.
         console.log(axis);
         this.watchForProbeStart();
-        chilipeppr.subscribe("/com-chilipeppr-widget-serialport/recvline", this, this.onRecvLineForProbe);
+        //chilipeppr.subscribe("/com-chilipeppr-widget-serialport/recvline", this, this.onRecvLineForProbe);
         if (axis == "z") this.runZAxis();
         if (axis == "x") this.runXAxis();
         if (axis == "y") this.runYAxis();
