@@ -381,13 +381,13 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
          D: gcode
        });
       }
-      else {
+      /* else {
         gcode = "G10 L2 P" + this.coordOffsetNo + " Z0"
         chilipeppr.publish("/com-chilipeppr-widget-serialport/jsonSend", {
          Id: id,
          D: gcode
         });
-      }
+      }*/
       this.runningAxis = "z";
       this.animInfiniteStart();
       console.log(this.animAxis);
