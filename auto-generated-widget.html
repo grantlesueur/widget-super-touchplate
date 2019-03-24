@@ -820,7 +820,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
     onAfterProbeDone: function(probeData) {
       // probeData should be of the format
       // {"e":1,"z":-7.844}
-      console.log(" gls onAfterProbeDone. probeData:", probeData);
+      console.log("gls onAfterProbeDone. probeData:", probeData);
 
       // unsub so we stop getting events
       this.watchForProbeEnd();
@@ -838,12 +838,12 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
         console.log("plateHeight:", plateHeight);
         //var gcode = "G28.3 Z" + plateHeight + "\n";
         var gcode = "";
-        if(this.coordOffsetNo == 0) {
-          gcode = "G28.3 Z" + plateHeight + "\n";
-        }
-        else if (this.coordOffsetNo == 10) { //Allowing G92
-          var gcode = "G92 Z" + plateHeight + "\n";
-        }
+          if(this.coordOffsetNo == 0) {
+            gcode = "G28.3 Z" + plateHeight + "\n";
+          }
+          else if (this.coordOffsetNo == 10) { //Allowing G92
+            var gcode = "G92 Z" + plateHeight + "\n";
+          }
         else {
           //Number($('#com-chilipeppr-widget-super-touchplate .diameter').val())
           var wcs_zoffset = plateHeight + this.zOffset.val();
