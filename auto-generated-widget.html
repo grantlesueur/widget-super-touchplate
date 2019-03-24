@@ -866,6 +866,9 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
         if (isNaN(plateWidth)) plateWidth = 0;
         if (isNaN(br)) br = 0;
         console.log("plateWidth:", plateWidth);
+        console.log("Bit Radius:", br)
+        console.log("Calculated xoffset:", xoffset)
+        console.log("MCS Probe", this.xOffset)
         //var gcode = "G28.3 X" + plateWidth + "\n";
         //var gcode = "G28.3 X" + br + "\n";
         var gcode = "";
