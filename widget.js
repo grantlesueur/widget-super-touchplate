@@ -770,7 +770,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
       // play good beep
       this.audio.play();
       console.log("gls running AXIS ", this.runningAxis)
-      console.log("gls running zAxis ", float.parsefloat(this.zOffset))
+      console.log("gls running zAxis ", Float.parseFloat(this.zOffset))
 
       // we take the value returned and then add the plate height and make that
       // machine coordinates offset
@@ -789,7 +789,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
           }
         else {
           //Number($('#com-chilipeppr-widget-super-touchplate .diameter').val())
-          var wcs_zoffset = float.parsefloat(plateHeight) + float.parsefloat(this.zOffset);
+          var wcs_zoffset = Float.parseFloat(plateHeight) + Float.parseFloat(this.zOffset);
           console.log("gls ...wcs_offset:", wcs_zoffset);
           var gcode = "G10 L2 P" + this.coordOffsetNo + " Z" + wcs_zoffset + "\n";
         }
