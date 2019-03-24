@@ -762,7 +762,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
     onAfterProbeDone: function(probeData) {
       // probeData should be of the format
       // {"e":1,"z":-7.844}
-      console.log("onAfterProbeDone. probeData:", probeData);
+      console.log(" gls onAfterProbeDone. probeData:", probeData);
 
       // unsub so we stop getting events
       this.watchForProbeEnd();
