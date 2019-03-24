@@ -732,7 +732,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
       chilipeppr.unsubscribe("/com-chilipeppr-interface-cnccontroller/axes", this, this.onAxes);
     },
     onRecvLineForProbe: function(data) {
-      console.log("onRecvLineForProbe. data:", data);
+      //console.log("onRecvLineForProbe. data:", data);
 
       // the data we're looking for is:
       // {"prb":{"e":1,"z":-7.844}}
@@ -752,8 +752,8 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
         json = json.r;
         //console.log("grant look at this:", json);
       }
-      console.log("grant look at this:", json);
-      console.log("grant look at this Running Axis =:", this.runningAxis);
+      //console.log("grant look at this:", json);
+      //console.log("grant look at this Running Axis =:", this.runningAxis);
 
       if ('prb' in json && 'e' in json.prb && this.runningAxis == "z") {
         this.zOffset = json.prb.z;
@@ -774,7 +774,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
         //GLS NEW Reset Button
       if ('prb' in json && 'e' in json.prb && this.runningAxis == "-x") {
         this.xOffset = json.prb.x;
-        console.log("X Offset from JSON: " + this.xOffset);
+        console.log("-X Offset from JSON: " + this.xOffset);
         $('#com-chilipeppr-widget-super-touchplate .btn-X-platerun').removeClass("btn-danger").text("Run -X");
         this.animInfiniteEnd();
         this.onAfterProbeDone(json.prb);
@@ -791,7 +791,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
       //GLS new
       if ('prb' in json && 'e' in json.prb && this.runningAxis == "-y") {
         this.yOffset = json.prb.y;
-        console.log("Y Offset from JSON: " + this.yOffset);
+        console.log("-Y Offset from JSON: " + this.yOffset);
         $('#com-chilipeppr-widget-super-touchplate .btn-Y-platerun').removeClass("btn-danger").text("Run -Y");
         this.animInfiniteEnd();
         this.onAfterProbeDone(json.prb);
@@ -800,7 +800,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
        //GLS new here is we will add the probing steps
       if ('prb' in json && 'e' in json.prb && this.runningAxis == "cf") {
         this.yOffset = json.prb.y;
-        console.log("Y Offset from JSON: " + this.yOffset);
+        console.log("CF Offset from JSON: " + this.yOffset);
         $('#com-chilipeppr-widget-super-touchplate .btn-Centerfinder').removeClass("btn-danger").text("Center Finder");
         this.animInfiniteEnd();
         this.onAfterProbeDone(json.prb);
