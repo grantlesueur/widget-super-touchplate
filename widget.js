@@ -807,10 +807,10 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
         var xoffset = br + plateWidth;
         if (isNaN(plateWidth)) plateWidth = 0;
         if (isNaN(br)) br = 0;
-        console.log("plateWidth:", plateWidth);
-        console.log("Bit Radius:", br)
-        console.log("Calculated xoffset:", xoffset)
-        console.log("MCS Probe", this.xOffset)
+        console.log("Grant plateWidth:", plateWidth);
+        console.log("Grant Bit Radius:", br)
+        console.log("Grant Calculated xoffset:", xoffset)
+        console.log("Grant MCS Probe", this.xOffset)
         //var gcode = "G28.3 X" + plateWidth + "\n";
         //var gcode = "G28.3 X" + br + "\n";
         var gcode = "";
