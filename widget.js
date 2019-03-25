@@ -792,7 +792,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
           //var wcs_zoffset = Double.parseDouble(plateHeight) + Double.parseDouble(this.zOffset);
           var wcs_zoffset = plateHeight + this.zOffset;
           console.log("gls ...wcs_offset: I made to Wcsoffset", this.zOffset.val());
-          var gcode = "G10 L2 P" + this.coordOffsetNo + " Z" + this.zOffset + "\n";
+          var gcode = "G10 L2 P" + this.coordOffsetNo + " Z" + this.zOffset.val() + "\n";
         }
         var id = "tp" + this.gcodeCtr++;
         chilipeppr.publish("/com-chilipeppr-widget-serialport/jsonSend", {
