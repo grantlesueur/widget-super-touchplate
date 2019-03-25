@@ -789,8 +789,8 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
           }
         else {
           //Number($('#com-chilipeppr-widget-super-touchplate .diameter').val())
-        
-          wcs_zoffset = Double.parseDouble(plateHeight) + Double.parseDouble(this.zOffset);
+          //var wcs_zoffset = Double.parseDouble(plateHeight) + Double.parseDouble(this.zOffset);
+          var wcs_zoffset = sum(plateHeight, this.zOffset);
           console.log("gls ...wcs_offset: I made to Wcsoffset");
           var gcode = "G10 L2 P" + this.coordOffsetNo + " Z" + wcs_zoffset + "\n";
         }
