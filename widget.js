@@ -480,8 +480,8 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
       this.animInfiniteStart();
     },
     
-    onAxes: function(xyzdata) {
-    var xyzjson = $.parseJSON(xyzdata.dataline)
+    onAxes: function(data) {
+    var xyzjson = $.parseJSON(data.dataline)
     console.log("gls This is the DRO Data ", xyzjson.mpo.z)  
     },
     
