@@ -480,7 +480,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
     
     onAxes: function(data) {
     var xyzjson = $.parseJSON(data.dataline)
-    console.log("GLS This is the DRO Data ", xyzjson)  
+    console.log("gls This is the DRO Data ", xyzjson)  
     },
     
     
