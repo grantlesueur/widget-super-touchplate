@@ -534,6 +534,11 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
       this.runningAxis = "-y";
       this.animInfiniteStart();
     },
+    
+    onAxes: function(xyzdata) {
+    var xyzjson = $.parseJSON(data.xyzdata)
+    console.log("GLS This is the DRO Data ", xyzjson)  
+    },
 
     /* //Center Finding Probing Routine 
     run_Centerfinder: function() {
@@ -736,10 +741,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
        //GLS Lets subscribe to the DRO
       chilipeppr.unsubscribe("/com-chilipeppr-interface-cnccontroller/axes", this, this.onAxes);
     },
-   onAxes: function(xyzdata) {
-    var xyzjson = $.parseJSON(data.xyzdata)
-    console.log("GLS This is the DRO Data ", xyzjson)  
-    },
+   
     onRecvLineForProbe: function(data) {
       //console.log("onRecvLineForProbe. data:", data);
 
