@@ -293,6 +293,9 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
       }
       //GLS I dont think we need this bit seeing we are working from MCS and pulling PCS to zero WCS from probing feedback
       else {
+        
+        chilipeppr.subscribe("/com-chilipeppr-interface-cnccontroller/axes", this, this.onAxes)
+        
         gcode = "G10 L2 P" + this.coordOffsetNo + " Z0"
         chilipeppr.publish("/com-chilipeppr-widget-serialport/jsonSend", {
          Id: id,
@@ -668,14 +671,14 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
       // We need to subscribe to the /recvline cuz we need to analyze everything coming back
       chilipeppr.subscribe("/com-chilipeppr-widget-serialport/recvline", this, this.onRecvLineForProbe);
       //GLS Lets subscribe to the DRO
-      chilipeppr.subscribe("/com-chilipeppr-interface-cnccontroller/axes", this, this.onAxes);
+      //chilipeppr.subscribe("/com-chilipeppr-interface-cnccontroller/axes", this, this.onAxes);
     },
     watchForProbeEnd: function() {
       chilipeppr.unsubscribe("/com-chilipeppr-widget-serialport/recvline", this, this.onRecvLineForProbe);
        //GLS Lets subscribe to the DRO
       chilipeppr.unsubscribe("/com-chilipeppr-interface-cnccontroller/axes", this, this.onAxes);
     },
-    onAxes: function(xyzdata) {
+   onAxes: function(xyzdata) {
     var xyzjson = $.parseJSON(data.xyzdata)
     console.log("GLS This is the DRO Data ", xyzjson)  
     },
