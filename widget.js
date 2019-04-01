@@ -276,6 +276,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
     runZAxis: function() {
       this.isRunning = true;
       //Begin finding out where we are at in MCS or G28.3
+      chilipeppr.subscribe("/com-chilipeppr-widget-xyz/com-chilipeppr-interface-cnccontroller/axes", this, this.onAxes);
       
       console.log("gls Starting Z-probing operation");
       //swap button to stop
@@ -683,7 +684,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
     watchForProbeEnd: function() {
       chilipeppr.unsubscribe("/com-chilipeppr-widget-serialport/recvline", this, this.onRecvLineForProbe);
        //GLS Lets unsubscribe to the DRO
-      chilipeppr.unsubscribe("/com-chilipeppr-interface-cnccontroller/axes", this, this.onAxes);
+      chilipeppr.unsubscribe("/com-chilipeppr-widget-xyz/com-chilipeppr-interface-cnccontroller/axes", this, this.onAxes);
     },
    
     onRecvLineForProbe: function(data) {
