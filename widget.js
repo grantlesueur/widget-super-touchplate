@@ -676,7 +676,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
       chilipeppr.unsubscribe("/com-chilipeppr-interface-cnccontroller/axes", this, this.onAxes);
     },
     onAxes: function(xyzdata) {
-    console.log("GLS This is the DRO Data ", xyzdata)  
+    console.log("GLS This is the DRO Data ", $.parseJSON(xyzdata))  
     },
     onRecvLineForProbe: function(data) {
       //console.log("onRecvLineForProbe. data:", data);
