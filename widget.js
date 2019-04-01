@@ -277,12 +277,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
       this.isRunning = true;
       //Begin finding out where we are at in MCS or G28.3
       
-     /* chilipeppr.subscribe("/com-chilipeppr-widget-xyz/com-chilipeppr-interface-cnccontroller/axes", this, this.onAxes);
-      console.log("gls Is this the DRO data", this.onAxes);
-      chilipeppr.unsubscribe("/com-chilipeppr-widget-xyz/com-chilipeppr-interface-cnccontroller/axes", this, this.onAxes);
-      */
-      
-      console.log("Starting Z-probing operation");
+      console.log("gls Starting Z-probing operation");
       //swap button to stop
       //GLS Zprobe Down
       $('#com-chilipeppr-widget-super-touchplate .btn-Zplaterun').addClass("btn-danger").text("Stop");
