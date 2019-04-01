@@ -275,6 +275,13 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
     
     runZAxis: function() {
       this.isRunning = true;
+      //Begin finding out where we are at in MCS or G28.3
+      
+      chilipeppr.subscribe("/com-chilipeppr-widget-xyz/com-chilipeppr-interface-cnccontroller/axes", this, this.onAxes);
+      console.log("gls Is this the DRO data", onAxes);
+      chilipeppr.unsubscribe("/com-chilipeppr-widget-xyz/com-chilipeppr-interface-cnccontroller/axes", this, this.onAxes);
+      
+      
       console.log("Starting Z-probing operation");
       //swap button to stop
       //GLS Zprobe Down
@@ -293,10 +300,6 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
       }
       //GLS I dont think we need this bit seeing we are working from MCS and pulling PCS to zero WCS from probing feedback
       else {
-        
-        //Because we want to probe properly we need to get the MCS position in absolute coords and use this to compensate the probing Gcode so it probes in the right direction.
-        chilipeppr.subscribe("/com-chilipeppr-interface-cnccontroller/axes", this, funtion(xyzdata))
-        console.log("gls this is the DRO data", xyzdata)
         
         gcode = "G10 L2 P" + this.coordOffsetNo + " Z0"
         chilipeppr.publish("/com-chilipeppr-widget-serialport/jsonSend", {
@@ -684,7 +687,7 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
     },
     watchForProbeEnd: function() {
       chilipeppr.unsubscribe("/com-chilipeppr-widget-serialport/recvline", this, this.onRecvLineForProbe);
-       //GLS Lets subscribe to the DRO
+       //GLS Lets unsubscribe to the DRO
       chilipeppr.unsubscribe("/com-chilipeppr-interface-cnccontroller/axes", this, this.onAxes);
     },
    
