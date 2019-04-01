@@ -352,7 +352,9 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
       //GLS I dont think we need this bit seeing we are working from MCS and pulling PCS to zero WCS from probing feedback
       else {
         
-        chilipeppr.subscribe("/com-chilipeppr-interface-cnccontroller/axes", this, this.onAxes)
+        //Because we want to probe properly we need to get the MCS position in absolute coords and use this to compensate the probing Gcode so it probes in the right direction.
+        chilipeppr.subscribe("/com-chilipeppr-interface-cnccontroller/axes", this, funtion(xyzdata))
+        console.log("gls this is the DRO data", xyzdata)
         
         gcode = "G10 L2 P" + this.coordOffsetNo + " Z0"
         chilipeppr.publish("/com-chilipeppr-widget-serialport/jsonSend", {
@@ -535,10 +537,12 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
       this.animInfiniteStart();
     },
     
-    onAxes: function(xyzdata) {
+    /* onAxes: function(xyzdata) {
     var xyzjson = $.parseJSON(data.xyzdata)
     console.log("GLS This is the DRO Data ", xyzjson)  
-    },
+    },*/
+    
+    
 
     /* //Center Finding Probing Routine 
     run_Centerfinder: function() {
