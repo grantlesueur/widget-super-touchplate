@@ -279,8 +279,8 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
       //chilipeppr.subscribe("/com-chilipeppr-widget-xyz/com-chilipeppr-interface-cnccontroller/axes", this, this.onAxes);
       
       console.log("gls Starting Z-probing operation");
-      chilipeppr.subscribe("/com-chilipeppr-widget-xyz/com-chilipeppr-interface-cnccontroller/axes", this, function (data) {
-         console.log("gls DRO data looks like this", data)
+      chilipeppr.subscribe("/com-chilipeppr-interface-cnccontroller/axes", this, function (xyzdata) {
+         console.log("gls DRO data looks like this", xyzdata)
       });
       
       //swap button to stop
