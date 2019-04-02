@@ -279,7 +279,9 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
       //chilipeppr.subscribe("/com-chilipeppr-widget-xyz/com-chilipeppr-interface-cnccontroller/axes", this, this.onAxes);
       
       console.log("gls Starting Z-probing operation");
-      chilipeppr.subscribe("/com-chilipeppr-widget-xyz/com-chilipeppr-interface-cnccontroller/axes", this, this.onAxes);
+      chilipeppr.subscribe("/com-chilipeppr-widget-xyz/com-chilipeppr-interface-cnccontroller/axes", this, function (data) {
+         console.log("gls DRO data looks like this", data)
+      });
       
       //swap button to stop
       //GLS Zprobe Down
@@ -480,10 +482,10 @@ cpdefine("inline:com-chilipeppr-widget-super-touchplate", ["chilipeppr_ready", '
       this.animInfiniteStart();
     },
     
-    onAxes: function(data) {
+   /* onAxes: function(data) {
     var xyzjson = $.parseJSON(data.dataline)
     console.log("gls This is the DRO Data ", xyzjson.mpo.z)  
-    },
+    }, */
     
     
 
